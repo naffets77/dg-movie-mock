@@ -1,1 +1,68 @@
-/* You can add global styles to this file, and also import other style files */
+// Reset file - Normally i'd rely on a css framework (bootstrap etc) to handle this, for now i'll just find one on the internet that looks modern (this is to help make the site look the same across browsers)
+@import './styles/reset.scss';
+
+// font import and definitions for custom fonts
+@import './styles/fonts.scss';
+
+// Defined variables for re-use
+@import './styles/variables.scss';
+
+// Mixins for re-use
+@import './styles/mixins.scss';
+
+
+// Assessment Note: Keeping things simple I'm going to stick to pixels. I could define a base font-size and define everything in REM
+// Assessment Note:  I use bootstrap so I'm just going to borrow some of their class terminology for my utility styles
+
+
+// Global styles
+// keeps the website centered
+html {
+  font-size: 10px; // specify our base font size for REM units. 10 is nice because it makes converting from pixel to REM easy
+}
+
+body {
+  font-family: "Open Sans", sans-serif;
+  font-size: 1.6rem;
+}
+
+.container {
+  width: 697px;
+  margin: 4.0rem auto;
+}
+
+// typography
+
+// Assessment Note: I'm only defining the styles in need for this project but normally all the h tags would defined
+
+h4 {
+  font-size: 2.4rem;
+  line-height: 1.8rem;
+  color: $gray3;
+}
+
+// utility styles
+
+.btn {
+  border-radius: 8px;
+  border: 1px solid $gray4;
+  padding: .8rem;
+  text-align: center;
+  line-height: 2.2rem;
+
+  &-sm {
+    line-height: 1.6rem;
+  }
+
+  &-primary {
+    color: $white;
+    background-color: $primaryColor;
+    border-color: $gray5;
+  }
+
+  &-secondary {
+    color: $white;
+    background-color: $secondaryColor;
+    border-color: $gray1;
+  }
+}

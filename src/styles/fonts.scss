@@ -1,0 +1,15 @@
+// browser compatibility on this isn't going to be perfect, would need more formats of the font
+
+@font-face {
+  font-family: 'Open Sans';
+  src: url('/assets/fonts/OpenSans-Light.ttft') format('trueType');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Open Sans';
+  src: url('/assets/fonts/OpenSans-Bold.ttft') format('trueType');
+  font-weight: 500;
+  font-style: normal;
+}
