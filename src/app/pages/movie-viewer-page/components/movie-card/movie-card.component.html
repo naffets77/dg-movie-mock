@@ -1,0 +1,25 @@
+<div class='movie-card'>
+  <div class='movie-img'>
+    <img [src]='OMDBMovie.Details.Poster' [alt]='OMDBMovie.Title' />
+  </div>
+  <div class='movie-details'>
+    <h4 class='movie-title'>{{OMDBMovie.Title}}</h4>
+    <div class='movie-metta-info'>
+      <div class='movie-rating'>
+        {{OMDBMovie.Details.Rated}}
+      </div>
+      <div class='movie-runtime'>
+        {{OMDBMovie.Details.Runtime}}
+      </div>
+      <div class='movie-release-date'>
+        {{OMDBMovie.Details.Released}}
+      </div>
+    </div>
+    <p class='movie-description'>
+      {{OMDBMovie.Details.Plot}}
+    </p>
+    <div class='movie-open-external btn btn-secondary'>
+      View on IMDB
+    </div>
+  </div>
+</div>

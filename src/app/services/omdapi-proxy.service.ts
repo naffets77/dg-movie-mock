@@ -11,15 +11,23 @@ import { OMDBGetMoviesResponse } from '../models/OMDAPI.interface';
 export class OMDApiProxyService {
 
   // Assessment Note: This isn't necessary but typically this stuff would come from an environment variable so it's contents could be configured during a deployment process more easily
-  private url: string = environment.urls.omdbAPI;
-  private OMDBAPIKey = environment.omdbAPIKey;
+  private url: string = environment.urls.OMDBAPI;
+  private OMDBAPIKey: string = environment.OMDBAPIKey;
 
   constructor(private httpClient: HttpClient) { }
 
-  getMoviesObs(search: string, retryCount: number = 3): Observable<any> {
-    // Assessment Note: Caching layer required depending on usage? For now it only loads on page load so caching isn't necessary
+  getMovies(search: string, retryCount: number = 3): Observable<any> {
 
-    return this.httpClient.get(`${this.url}/?apikey=${this.OMDBAPIKey}&s=${search}`).pipe(
+    // Assessment Note: Caching layer could be added for retreving searched results faster
+
+    return this.httpClient.get(`${this.url}?apikey=${this.OMDBAPIKey}&s=${search}&type=movie`).pipe(
+      retry(retryCount),
+      catchError(this.errorHandler)
+    );
+  }
+
+  getMovieDetails(IMDBID: string, retryCount: number = 3) {
+    return this.httpClient.get(`${this.url}?apikey=${this.OMDBAPIKey}&i=${IMDBID}`).pipe(
       retry(retryCount),
       catchError(this.errorHandler)
     );

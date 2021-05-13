@@ -1,0 +1,65 @@
+@import '../../../styles/variables.scss';
+
+/*
+   Assessment Note: I'm using floats to keep it simple. If it was more complex or dynamic UI I could get into flex box, but I find flex-box is overkill
+   a lot of the time.
+
+   Of course if a grid system was available i'd use that as much as possible. Since a grid system wasn't specified as a requirement, and I can solve the problem pretty easily without
+   one I'm not going to re-invent the wheel and implement one.
+*/
+
+.search {
+  float: left;
+  margin-bottom: 2.4rem;
+  padding-bottom: 2.4rem;
+  border-bottom: 1px solid $gray5;
+  width: 100%;
+
+  .form-control {
+    width: 240px;
+    float: left;
+  }
+
+  .btn {
+    float: left;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-left: none;
+  }
+
+  .loading-indicator {
+    margin-top: .2rem;
+    margin-left: 1.6rem;
+  }
+}
+
+.movie-year-selector {
+  float: left;
+  width: 100%;
+  margin-bottom: 1.6rem;
+
+  .btn {
+    float: right;
+    font-size: 1.4rem;
+
+    &:first-child {
+      border-top-right-radius: 8px;
+      border-bottom-right-radius: 8px;
+      border-left: none;
+    }
+
+    &:last-child {
+      border-top-left-radius: 8px;
+      border-bottom-left-radius: 8px;
+      border-right: none;
+
+    }
+  }
+}
+
+.movies-container {
+  float: left;
+  width: 100%;
+
+
+}

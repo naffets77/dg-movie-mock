@@ -4,9 +4,9 @@
 
 export const environment = {
   production: false,
-  omdbAPIKey: 470e531,
+  OMDBAPIKey: '470e531f',
   urls: {
-    omdbAPI: 'https://omdbapi.com'
+    OMDBAPI: 'https://omdbapi.com'
   }
 };
 

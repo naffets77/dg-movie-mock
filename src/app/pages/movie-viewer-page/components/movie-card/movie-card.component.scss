@@ -1,0 +1,76 @@
+@import '../../../../../styles/variables.scss';
+
+.movie-card {
+  float: left;
+  width: 100%;
+  border: 2px solid $gray3;
+  border-radius: 8px;
+  background-color: $gray8;
+  padding: 1.6rem;
+  margin-bottom: 16px;
+
+  .movie-img {
+    float: left;
+    width: 140px;
+    height: 208px;
+    background-color: $white;
+
+    img {
+      height: 100%;
+      width: 100%;
+    }
+  }
+
+  .movie-details {
+
+    float: left;
+    width: 498px;
+    margin-left: 20px;
+
+    .movie-title {
+      border-bottom: 2px solid $gray6;
+      padding-bottom: .8rem;
+    }
+
+    .movie-metta-info {
+
+      font-size: 1.4rem;
+      margin-top: .8rem;
+
+
+      .movie-rating {
+        border-radius: 4px;
+        border: 1px solid $gray6;
+        padding: .4rem;
+        color: $gray6;
+        float: left;
+      }
+
+      .movie-runtime {
+        margin-left: 1.6rem;
+        float: left;
+        line-height: 2.4rem;
+      }
+
+      .movie-release-date {
+        float: right;
+        line-height: 2.4rem;
+      }
+    }
+
+    .movie-description {
+      float: left;
+      width: 100%;
+      line-height: 2.1rem;
+      margin-top: 1.6rem;
+    }
+
+    .movie-open-external {
+      float: right;
+      margin-top: 1.6rem;
+      width: 194px;
+    }
+  }
+
+
+}
