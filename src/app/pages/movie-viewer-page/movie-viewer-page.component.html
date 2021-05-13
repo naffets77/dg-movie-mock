@@ -5,6 +5,10 @@
     <button *ngIf='!loading' class='btn btn-primary' [disabled]='form.invalid' (click)='submitForm()'>
       Search
     </button>
+
+    <div class='result-amount' *ngIf='!loading'>
+      Showing 10 of {{totalResults}}
+    </div>
   </form>
 
 </div>
@@ -12,7 +16,7 @@
 <ng-container *ngIf='!loading && totalResults > 0'>
   <div class='movie-year-selector'>
 
-    <div *ngFor='let year of yearsForFilter' class='year btn btn-sm no-border-radius' [ngClass]='{"btn-primary": year == activeYear}' (click)='activeYear = year'>
+    <div *ngFor='let year of decadesForFilter' class='year btn btn-sm no-border-radius' [ngClass]='{"btn-primary": year == activeDecade}' (click)='activeDecade = year'>
       {{year}}'s
     </div>
     <!-- <div class='year btn btn-primary btn-sm'>
@@ -24,7 +28,7 @@
   </div>
 
   <div class='movies-container'>
-    <app-movie-card *ngFor='let OMDBMovie of movieSearchResult.Search | decadeFilter:activeYear' [OMDBMovie]='OMDBMovie'></app-movie-card>
+    <app-movie-card *ngFor='let OMDBMovie of movieSearchResult.Search | decadeFilter:activeDecade' [OMDBMovie]='OMDBMovie'></app-movie-card>
   </div>
 </ng-container>
 

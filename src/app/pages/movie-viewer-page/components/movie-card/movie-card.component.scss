@@ -8,6 +8,7 @@
   background-color: $gray8;
   padding: 1.6rem;
   margin-bottom: 16px;
+  position: relative;
 
   .movie-img {
     float: left;
@@ -26,6 +27,7 @@
     float: left;
     width: 498px;
     margin-left: 20px;
+    min-height: 220px;
 
     .movie-title {
       border-bottom: 2px solid $gray6;
@@ -63,12 +65,15 @@
       width: 100%;
       line-height: 2.1rem;
       margin-top: 1.6rem;
+      max-height: 90px;
+      overflow: auto;
     }
 
     .movie-open-external {
-      float: right;
-      margin-top: 1.6rem;
       width: 194px;
+      position: absolute;
+      bottom: 1.6rem;
+      right: 1.6rem;
     }
   }
 

@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { OMDApiProxyService } from 'src/app/services/omdapi-proxy.service';
-import { ActivatedRoute, RouteConfigLoadEnd, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { OMDBMovie, OMDBGetMoviesResponse, OMDBMovieDetails } from 'src/app/models/OMDAPI.interface';
-import { Observable, forkJoin } from 'rxjs';
+import { OMDBGetMoviesResponse, } from 'src/app/models/OMDAPI.interface';
+
+import { MovieService } from 'src/app/services/movie.service';
+import { GetMoviesResponse } from 'src/app/models/movie.interface';
 
 @Component({
   selector: 'app-movie-viewer-page',
@@ -16,10 +18,10 @@ export class MovieViewerPageComponent implements OnInit {
   public form: FormGroup;
   public movieSearchResult: OMDBGetMoviesResponse;
   public totalResults: number;
-  public yearsForFilter: number[];
-  public activeYear: number = null;
+  public decadesForFilter: number[];
+  public activeDecade: number = null;
 
-  constructor(private route: ActivatedRoute, private router: Router, private OMDApiProxyService: OMDApiProxyService) {
+  constructor(private route: ActivatedRoute, private router: Router, private movieService: MovieService, private OMDApiProxyService: OMDApiProxyService) {
 
   }
 
@@ -29,7 +31,7 @@ export class MovieViewerPageComponent implements OnInit {
       this.loading = true;
       this.movieSearchResult = null;
       this.totalResults = null;
-      this.yearsForFilter = [];
+      this.decadesForFilter = [];
       this.initializeForm(result.get('search') || '');
       this.search();
     });
@@ -37,7 +39,7 @@ export class MovieViewerPageComponent implements OnInit {
   }
 
   public submitForm() {
-    if (this.form.invalid) {
+    if (this.form.invalid || this.form.controls['search'].value === this.route.snapshot.params['search']) {
       return;
     }
     this.form.controls['search'].disable();
@@ -51,85 +53,26 @@ export class MovieViewerPageComponent implements OnInit {
     })
   }
 
-
   private search() {
+
 
     if (this.form.invalid) {
       return;
     }
 
-    this.OMDApiProxyService.getMovies(this.form.controls['search'].value).subscribe((result: OMDBGetMoviesResponse) => {
+    this.movieService.getMovies(this.form.controls['search'].value).subscribe((result: GetMoviesResponse) => {
 
-      const totalResults = parseInt(result.totalResults, 0);
+      this.totalResults = parseInt(result.OMDBGetMoviesResponse.totalResults, 10);
 
-      if (totalResults === 0) {
-        this.movieSearchResult = result;
-        this.loading = false;
-        this.form.controls['search'].enable();
-        return;
+      if (this.totalResults > 0) {
+        this.movieSearchResult = result.OMDBGetMoviesResponse;
+        this.decadesForFilter = result.decades;
+        this.activeDecade = this.decadesForFilter[this.decadesForFilter.length - 1]; // default to recent
       }
 
-      const obs$: Observable<any>[] = [];
+      this.loading = false;
 
-      result.Search.forEach((movie: OMDBMovie) => {
-        obs$.push(this.OMDApiProxyService.getMovieDetails(movie.imdbID));
-      });
-
-      forkJoin(obs$).subscribe((detailResults: OMDBMovieDetails[]) => {
-
-
-        /*
-           Assessment Note:
-
-           I'd prefer not to have a nested for loop in general, however it's on the client and a small subset of data. The time to do the
-           async calls are a magnitude greater than setting this data, so I think it's fine w/out sacrificing releatvie performance. If I
-           did think that this was taking a long time (maybe for a larger data set... i.e. if the minimum wasn't 10 but like 100 per page)
-           I could implement a cache with an object to lookup the id's immediatley w/out having to loop.
-
-        */
-
-        // can't trust the order here because they're async so we'll just search and set the data by imdb id
-        detailResults.forEach((detailResult: OMDBMovieDetails) => {
-          const movie = result.Search.find(m => m.imdbID === detailResult.imdbID)
-          if (movie) {
-            movie.Details = detailResult;
-          }
-        });
-
-
-
-        this.totalResults = totalResults;
-        this.movieSearchResult = result;
-
-        this.setupDecades();
-        this.activeYear = this.yearsForFilter[0];
-
-        this.loading = false;
-        this.form.controls['search'].enable();
-
-        console.log(this.movieSearchResult);
-
-      })
-
-    })
-  }
-
-  private setupDecades() {
-    this.movieSearchResult.Search.forEach((result: OMDBMovie) => {
-
-      const decade = Math.floor(parseInt(result.Year) / 10) * 10;
-      result._meta = {
-        decade: decade
-      };
-
-      if (this.yearsForFilter.includes(decade)) {
-        return;
-      }
-
-      this.yearsForFilter.push(decade);
     });
-
-    this.yearsForFilter.sort();
   }
 
 }
