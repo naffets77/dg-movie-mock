@@ -1,8 +1,8 @@
 <div class='search'>
   <form [formGroup]='form'>
-    <input formControlName='search' type='text' class='form-control' placeholder='Search for a movie...' />
+    <input formControlName='search' type='text' class='form-control' placeholder='Search for a movie...' tabindex='0' dgAutoFocus />
     <ng-container *ngIf='loading'><img class='loading-indicator' src='/assets/graphics/loaders/button-spinner.svg'></ng-container>
-    <button *ngIf='!loading' class='btn btn-primary' [disabled]='form.invalid' (click)='submitForm()'>
+    <button *ngIf='!loading' class='btn btn-primary' [disabled]='form.invalid' (click)='submitForm()' tabindex='1'>
       Search
     </button>
 
