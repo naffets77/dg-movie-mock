@@ -70,6 +70,7 @@ export class MovieViewerPageComponent implements OnInit {
         this.activeDecade = this.decadesForFilter[this.decadesForFilter.length - 1]; // default to recent
       }
 
+      this.form.controls['search'].enable();
       this.loading = false;
 
     });
